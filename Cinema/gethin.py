@@ -26,6 +26,7 @@ user_login = {
 }
 
 
+
 @dataclass
 class Film:
     movie: str
@@ -38,6 +39,30 @@ starwars = Film("Star Wars", 4.99, "Science Fiction", 18)
 jurassic_park = Film("Jurassic Park", 8.00, "Adventure", 15)
 
 films = [spiderman, starwars, jurassic_park]
+
+
+@dataclass
+class Snack:
+    snack: str
+    price: float
+    category: str
+
+popcorn = Snack("Popcorn", 4.99, "Sweet")
+hotdog = Snack("Hotdog", 2.99, "Savory")
+nachos = Snack("Nachos", 3.00, "Savory")
+drink = Snack("Drink", 2.50, "Drink")
+
+snacks = [popcorn, hotdog, nachos, drink]
+
+def display_snacks():
+    print("\n     CURRENT SNACKS")
+    print("-" * 50)
+    for snack in snacks:
+        print(f"- {snack.snack}")
+        print(f"    Price    : £{snack.price:.2f}")
+        print(f"    Category : {snack.category}")
+        print("-" * 50)
+
 
 
 #quits program
@@ -104,19 +129,19 @@ def print_receipt(customer_name, movie_name, amount, total_price):
     now = datetime.now()
     date_time = now.strftime("%d/%m/%Y  %H:%M")
 
-    print("\n" + "=" * 30)
+    print("\n" + "=" * 45)
     print(" " * 15 + f"{CINEMA_NAME} Receipt")
-    print("=" * 30)
+    print("=" * 45)
     print(f" Customer     : {customer_name.title()}")
     print(f" Movie           : {movie_name}")
     print(f" Tickets         : {amount}")
     print(f" Total Price   : £{total_price:.2f}")
     print(f" Balance        :£{user_login['wallet']:.2f}")
-    print("-" * 55)
+    print("-" * 45)
     print(f" Date & Time: {date_time}")
-    print("-" * 55)
+    print("-" * 45)
     print(" Thank you for booking with Gethin-Plex!")
-    print("=" * 30)
+    print("=" * 45)
 
   
 
@@ -208,9 +233,9 @@ def login():
 #intro animation (prints a line at a time)
 box = [
 "===============================================",
-"|                                                                                                        |",
-"|                        WELCOME TO GETHIN PLEX                              |",
-"|                                                                                                        |",
+"|                                              |",                                                                                     
+"|            WELCOME TO GETHIN PLEX            |",
+"|                                              |",                                                                                                    
 "==============================================="
 ]
 
@@ -286,6 +311,26 @@ def customer():
             
                 time.sleep(1)
                 seat_booking(selected_film.movie, amount)
+
+                #snacks here
+                snacks_buy = str(input("Would you like to purchase any snacks? (y / n) ")).lower()
+                if snacks_buy == "y":
+                    display_snacks()
+                    time.sleep(1)
+                    print("adding snacks soon... be patient!!")
+                    time.sleep(3)
+
+
+                    
+
+        
+
+                
+
+                
+                    
+
+                
                 time.sleep(1)
                 print("-" * 85)
                 user_login["wallet"] -= total_price
