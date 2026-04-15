@@ -1,8 +1,8 @@
+
 # ---------------- VARIABLES ----------------
 
 rows = 8
 cols = 9
-
 
 PASSWORD = "janiscool"
 total_cost = 0
@@ -15,17 +15,17 @@ def generate_seats():
 def display_seats(seats):
     print("\nSeating Plan:")
     for i in range(len(seats)):
-        print(chr(65 + i), end=" ")
+        print(chr(65 + i), end=" ") # Print The A,B,Cs
         for j in range(len(seats[i])):
-            print(seats[i][j], end=" ")
+            print(seats[i][j], end=" ")# Print X/-
         print()
 
 def choose_seat(seats, price):
     global total_cost
     choice = input("\nEnter seat (e.g. A1): ").upper()
    
-    row = ord(choice[0]) - 65
-    col = int(choice[1:]) - 1
+    row = ord(choice[0:]) - 65
+    col = int(choice[1:])
 
     if seats[row][col] == "X ":
         seats[row][col] = "- "
@@ -51,13 +51,11 @@ def price_change():
 
 # ---------------- MAIN LOOP ----------------
 
-
 films = [
     {"name": "Avengers", "price": 10, "seats": generate_seats()},
     {"name": "Batman", "price": 10, "seats": generate_seats()},
     {"name": "Dog Man", "price": 10, "seats": generate_seats()}
 ]
-
 
 running = True
 
@@ -71,7 +69,6 @@ while running:
 
     if user == "user":
         while True:
-            # Show available films
             print("\nAvailable Films:")
             for i in range(len(films)):
                 print(i+1, films[i]["name"], "£", films[i]["price"])
@@ -82,18 +79,32 @@ while running:
                 print("\nPlease choose an availible movie!")
                 print("\n=====================================================")
                 continue
+
             selected_film = films[film_choice-1]
             seats = selected_film["seats"]
             movie_cost = selected_film["price"]
 
             print(f"\nYou selected: {selected_film['name']}")
 
-            # Seat booking
             display_seats(seats)
             choose_seat(seats, movie_cost)
 
             again = input("\nBook another seat? (y/n): ").lower()
             if again != "y":
+
+                points = int(input("\nHow many loyalty points do you have? "))
+
+                discount = points / 100
+
+                use = input("Do you want to use your points? (y/n): ").lower()
+
+                if use == "y":
+                    if discount > total_cost:
+                        discount = total_cost
+
+                    total_cost = total_cost - discount
+                    print("\nDiscount applied!")
+
                 print("\n=====================================================")
                 print(f"\nYour total is £{total_cost:.2f}")
                 print("\nThank you for using the cinema system!")
@@ -127,4 +138,3 @@ while running:
    
     else:
         print("Invalid option. Type User or Admin.")
-
